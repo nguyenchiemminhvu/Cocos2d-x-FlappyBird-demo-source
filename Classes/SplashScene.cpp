@@ -1,7 +1,7 @@
 #include "SplashScene.h"
 #include "Defination.h"
 #include "MainMenuScene.h"
-
+#include "SimpleAudioEngine.h"
 
 Scene* SplashScene::createScene()	{
 	auto scene = Scene::create();
@@ -16,6 +16,11 @@ bool SplashScene::init()	{
 		return false;
 	}
 	
+	//load sound
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect( "Sounds/Hit.mp3" );
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect( "Sounds/Point.mp3" );
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect( "Sounds/Wing.mp3" );
+
 	this->scheduleOnce( schedule_selector(SplashScene::goToMainMenuScene), DISPLAY_TIME_SPLASH_SCENE );
 
 	auto visibleSize = Director::getInstance()->getVisibleSize();

@@ -4,6 +4,7 @@
 #include "Defination.h"
 #include "Pipe.h"
 #include "Bird.h"
+#include "SimpleAudioEngine.h"
 
 
 Scene* GameScene::createScene()	{
@@ -50,6 +51,7 @@ bool GameScene::init()	{
 	touchListener->setSwallowTouches( true );
 	touchListener->onTouchBegan = [=] (Touch* touch, Event* event) -> bool	{
 		bird->flapping();
+		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect( "Sounds/Wing.mp3" );
 		return true;
 	};
 
@@ -113,12 +115,14 @@ bool GameScene::onContactBegin(PhysicsContact& contact)	{
 	if( (bitmaskA == BIRD_COLLISION_BITMASK && bitmaskB == OBSTACLE_COLLISION_BITMASK)
 		|| (bitmaskA == OBSTACLE_COLLISION_BITMASK && bitmaskB == BIRD_COLLISION_BITMASK) )	   {
 		
+		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect( "Sounds/Hit.mp3" );
 		goToGameOverScene( this );
 	}
 
 	if( (bitmaskA == BIRD_COLLISION_BITMASK && bitmaskB == POINT_COLLISION_BITMASK)
 		|| (bitmaskA == POINT_COLLISION_BITMASK && bitmaskB == BIRD_COLLISION_BITMASK) )	{
 
+		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect( "Sounds/Point.mp3" );
 		hud->increaseScore();
 	}
 	return true;
